@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Is it ready for iPhone Duo?</title>
+  <meta name="description" content="Search thousands of App Store apps to see which ones have been optimized for iPhone Duo, which have been updated without saying, and which haven't been updated at all.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='6' width='28' height='20' rx='4' fill='%230B7A47'/%3E%3Cpath d='M16 6v20' stroke='%23fff' stroke-opacity='.5'/%3E%3C/svg%3E">
+</head>
+<body>
+  <!-- Status icons: a tiny screen. Optimized apps fill it; apps that aren't run with black bars on the sides. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="g-optimized" viewBox="0 0 22 16">
+      <rect x="1" y="1" width="20" height="14" rx="3" fill="currentColor"/>
+      <path d="M11 1.5v13" stroke="var(--crease-on-fill)" stroke-width="1"/>
+    </symbol>
+    <symbol id="g-unconfirmed" viewBox="0 0 22 16">
+      <rect x="1.5" y="1.5" width="19" height="13" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+      <path d="M11 3v10" stroke="currentColor" stroke-width="1" stroke-opacity=".5"/>
+    </symbol>
+    <symbol id="g-not" viewBox="0 0 22 16">
+      <rect x="1" y="1" width="20" height="14" rx="3" fill="#000" stroke="var(--letterbox-edge, transparent)" stroke-width="1"/>
+      <rect x="6.5" y="2.5" width="9" height="11" rx="1" fill="var(--letterbox-center)"/>
+    </symbol>
+  </svg>
+
+  <header class="hero">
+    <h1>Is it ready for iPhone&nbsp;Duo?</h1>
+    <p class="intro" id="intro">We read the App Store release notes of popular apps every day to see which ones have been optimized for the inner display.</p>
+    <form class="search" role="search" onsubmit="return false">
+      <label for="q" class="visually-hidden">Search apps</label>
+      <input id="q" type="search" placeholder="Search by app or developer" autocomplete="off" spellcheck="false" disabled>
+    </form>
+  </header>
+
+  <main>
+    <div class="controls">
+      <div class="statuses" role="group" aria-label="Show apps by status" id="statuses">
+        <button type="button" data-status="all" aria-pressed="true"><span class="label">All apps</span> <span class="count"></span></button>
+        <button type="button" data-status="optimized" aria-pressed="false"><svg class="glyph glyph-optimized" aria-hidden="true"><use href="#g-optimized"/></svg><span class="label">Optimized</span> <span class="count"></span></button>
+        <button type="button" data-status="unconfirmed" aria-pressed="false"><svg class="glyph glyph-unconfirmed" aria-hidden="true"><use href="#g-unconfirmed"/></svg><span class="label">Not confirmed</span> <span class="count"></span></button>
+        <button type="button" data-status="not_optimized" aria-pressed="false"><svg class="glyph glyph-not" aria-hidden="true"><use href="#g-not"/></svg><span class="label">Not optimized</span> <span class="count"></span></button>
+      </div>
+      <div class="refine">
+        <label>Category
+          <select id="genre"><option value="">All categories</option></select>
+        </label>
+        <label>Sort by
+          <select id="sort">
+            <option value="popular">Most popular</option>
+            <option value="recent">Recently updated</option>
+            <option value="name">Name</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <p class="summary" id="summary" aria-live="polite">Loading apps…</p>
+    <ol class="apps" id="apps"></ol>
+    <button type="button" class="more" id="more" hidden>Show 50 more</button>
+    <noscript><p class="summary">This site needs JavaScript to search apps.</p></noscript>
+
+    <section class="how" aria-labelledby="how-title">
+      <h2 id="how-title">How we check</h2>
+      <p>Apple started accepting apps built for iPhone Duo on <span class="since-date">October 5, 2026</span>. Only apps built with the iOS 27.1 SDK or later can fill the inner display. Older apps still run, but with black bars on the sides (<a href="https://www.macrumors.com/2026/10/05/apple-opens-iphone-duo-app-submissions/">MacRumors</a>). Every app gets one of three statuses:</p>
+      <dl class="legend">
+        <div>
+          <dt><span class="chip chip-optimized"><svg class="glyph" aria-hidden="true"><use href="#g-optimized"/></svg>Optimized</span></dt>
+          <dd>The developer’s release notes say the app is optimized for, supports or was redesigned for iPhone Duo. We quote their exact words.</dd>
+        </div>
+        <div>
+          <dt><span class="chip chip-unconfirmed"><svg class="glyph" aria-hidden="true"><use href="#g-unconfirmed"/></svg>Not confirmed</span></dt>
+          <dd>The app has been updated since <span class="since-date">October 5</span>, but the release notes don’t say it’s optimized. Most apps only need a rebuild to fill the inner display, and many developers don’t mention it, so some of these will already work full screen.</dd>
+        </div>
+        <div>
+          <dt><span class="chip chip-not"><svg class="glyph" aria-hidden="true"><use href="#g-not"/></svg>Not optimized</span></dt>
+          <dd>The app hasn’t been updated since <span class="since-date">October 5</span>, so it can’t have been built for iPhone Duo yet.</dd>
+        </div>
+      </dl>
+      <p>The apps come from the US App Store’s top free, paid and top grossing charts in every category, plus App Store searches for iPhone Duo and foldable apps. Once we find an app, we keep checking it, even after it drops off the charts. For each app updated since <span class="since-date">October 5</span>, we read every release since then, not just the latest one.</p>
+      <p id="checked"></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Not affiliated with Apple. iPhone is a trademark of Apple Inc., registered in the U.S. and other countries.</p>
+  </footer>
+
+  <template id="app-row">
+    <li class="app">
+      <span class="icon" aria-hidden="true"></span>
+      <div class="head">
+        <h3 class="name"><a target="_blank" rel="noopener"></a></h3>
+        <p class="by"></p>
+      </div>
+      <span class="chip"><svg class="glyph" aria-hidden="true"><use/></svg><span class="chip-label"></span></span>
+      <div class="body">
+        <p class="detail"></p>
+      </div>
+    </li>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
