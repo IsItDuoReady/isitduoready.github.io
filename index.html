@@ -6,6 +6,8 @@
   <title>Is it ready for iPhone Duo?</title>
   <meta name="description" content="Search thousands of App Store apps to see which ones have been optimized for iPhone Duo, which have been updated without saying, and which haven't been updated at all.">
   <meta name="color-scheme" content="light dark">
+  <!-- Also makes GoatCounter count every visit as "/", not each ?q= search link as its own page. -->
+  <link rel="canonical" href="https://isitduoready.github.io/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
@@ -88,6 +90,7 @@
   </main>
 
   <footer class="site-footer">
+    <p>We count visits and searches with <a href="https://www.goatcounter.com/">GoatCounter</a>, which doesn’t use cookies or collect personal information.</p>
     <p>Not affiliated with Apple. iPhone is a trademark of Apple Inc., registered in the U.S. and other countries.</p>
   </footer>
 
@@ -105,6 +108,8 @@
     </li>
   </template>
 
+  <!-- Visit counts: https://isitduoready.goatcounter.com (no cookies). It skips localhost previews. -->
+  <script data-goatcounter="https://isitduoready.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

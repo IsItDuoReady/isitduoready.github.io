@@ -207,6 +207,29 @@ function update(changes) {
   Object.assign(state, changes, { shown: PAGE });
   render();
   writeUrl();
+  if ("q" in changes) countSearch();
+}
+
+// --- Analytics -----------------------------------------------------------------
+// GoatCounter (loaded in index.html) counts visits on its own. Searches are counted as
+// events once someone stops typing: "search/<words>", or "search-not-found/<words>" when
+// no tracked app matches, which shows the apps people want that aren't on the list.
+
+const SEARCH_PAUSE = 1500;
+let searchTimer;
+let lastCounted = "";
+
+function countSearch() {
+  clearTimeout(searchTimer);
+  const words = fold(state.q).trim().replace(/\s+/g, " ").slice(0, 60);
+  if (words.length < 2 || words === lastCounted) return;
+  searchTimer = setTimeout(() => {
+    const counter = window.goatcounter;
+    if (!counter || typeof counter.count !== "function") return;  // blocked or not loaded yet
+    lastCounted = words;
+    const found = apps.some((a) => matchesQuery(a, words.split(" ")));
+    counter.count({ path: `${found ? "search" : "search-not-found"}/${words}`, title: words, event: true });
+  }, SEARCH_PAUSE);
 }
 
 // --- Start ---------------------------------------------------------------------
@@ -254,6 +277,7 @@ function setup() {
   });
 
   render();
+  if (state.q) countSearch();  // someone opened a shared search link
 }
 
 fetch("apps.json")
